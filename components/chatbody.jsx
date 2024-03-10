@@ -28,6 +28,7 @@ const ChatBody = ({ data }) => {
             </div>
           );
         }
+        
       })}
     </>
   );

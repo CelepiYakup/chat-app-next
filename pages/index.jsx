@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { API_URL } from '../constants';
+import { API_URL } from '../constants/index';
 import { v4 as uuidv4 } from 'uuid';
-import { WEBSOCKET_URL } from '../constants';
-import { AuthContext } from '../modules/auth_provider';
+import { WEBSOCKET_URL } from '../constants/index';
+import { AuthContext } from '@/modules/auth_provider';
 import { WebsocketContext } from '../modules/websocket_provider';
 import { useRouter } from 'next/router';
 

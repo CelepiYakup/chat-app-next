@@ -6,6 +6,7 @@ export const AuthContext = createContext({
   setAuthenticated: () => {},
   user: { username: '', id: '' },
   setUser: () => {},
+  handleLogin: () => {}, // Define handleLogin in context
 });
 
 const AuthContextProvider = ({ children }) => {
@@ -15,31 +16,30 @@ const AuthContextProvider = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    const userInfo = localStorage.getItem('user_info');
-
-    if (!userInfo) {
-      return; // No need to redirect if no user info
-    }
-
-    const user = JSON.parse(userInfo);
-    if (user) {
-      setUser({
-        username: user.username,
-        id: user.id,
-      });
+    const isAuthenticated = localStorage.getItem('user_info');
+    if (isAuthenticated) {
       setAuthenticated(true);
+      setUser(JSON.parse(isAuthenticated));
+    } else {
+      router.push('/login');
     }
-  }, []);
+  }, [router]);
 
   const handleLogin = async (data) => {
-    // Implement your login logic here (using data.email & data.password)
-    // Upon successful login, update user and authenticated state
-    setUser({ username: 'example', id: 1 }); // Replace with actual user data
+    // You can add login logic here
+    // For now, just set authenticated to true
     setAuthenticated(true);
+    // Also, you may want to set user info in localStorage
+    // localStorage.setItem('user_info', JSON.stringify(data));
 
-    // Redirect to chat app homepage after successful login (replace with your desired route)
     router.push('/');
   };
+
+  useEffect(() => {
+    if (!authenticated) {
+      router.push('/login');
+    }
+  }, [authenticated, router]);
 
   return (
     <AuthContext.Provider
@@ -48,7 +48,7 @@ const AuthContextProvider = ({ children }) => {
         setAuthenticated: setAuthenticated,
         user: user,
         setUser: setUser,
-        handleLogin, // Add handleLogin function to context
+        handleLogin: handleLogin, // Add handleLogin function to context
       }}
     >
       {children}

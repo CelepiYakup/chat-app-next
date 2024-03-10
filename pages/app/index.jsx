@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useEffect } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import ChatBody from '@/components/chatbody';
 import { WebsocketContext } from '../../modules/websocket_provider';
 import { useRouter } from 'next/router';
@@ -12,7 +12,6 @@ const Index = () => {
   const { conn } = useContext(WebsocketContext);
   const [users, setUsers] = useState([]);
   const { user } = useContext(AuthContext);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -61,7 +60,7 @@ const Index = () => {
         return;
       }
 
-      user?.username === m.username ? (m.type = 'self') : (m.type = 'recv');
+      m.type = user?.username === m.username ? 'self' : 'recv';
       setMessage([...messages, m]);
     };
 
@@ -98,7 +97,10 @@ const Index = () => {
               />
             </div>
             <div className='flex items-center'>
-              <button className='p-2 rounded-md bg-blue text-white' onClick={sendMessage}>
+              <button
+                className='p-2 rounded-md bg-blue text-white'
+                onClick={sendMessage}
+              >
                 Send
               </button>
             </div>
