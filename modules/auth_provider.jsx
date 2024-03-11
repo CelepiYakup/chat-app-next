@@ -6,7 +6,7 @@ export const AuthContext = createContext({
   setAuthenticated: () => {},
   user: { username: '', id: '' },
   setUser: () => {},
-  handleLogin: () => {}, // Define handleLogin in context
+  handleLogin: () => {}, 
 });
 
 const AuthContextProvider = ({ children }) => {
@@ -26,13 +26,10 @@ const AuthContextProvider = ({ children }) => {
   }, [router]);
 
   const handleLogin = async (data) => {
-    // You can add login logic here
-    // For now, just set authenticated to true
+     
     setAuthenticated(true);
-    // Also, you may want to set user info in localStorage
-    // localStorage.setItem('user_info', JSON.stringify(data));
-
-    router.push('/');
+  
+        router.push('/');
   };
 
   useEffect(() => {

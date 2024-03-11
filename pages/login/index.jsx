@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import { API_URL } from '../../constants';
 import { useRouter } from 'next/router';
 import { AuthContext } from '../../modules/auth_provider';
+import Link from 'next/link';
 
 const Index = () => {
   const [email, setEmail] = useState('');
@@ -59,6 +60,12 @@ const Index = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        <p className='p-1 mt-2 rounded-md bg-black font-bold text-sm text-black'>
+          You don't have an account?
+        </p>
+        <Link className='p-1 mt font-bold bg-black text-blue text-sm' href={'/signup'}>
+          Signup
+        </Link>
         <button
           className='p-3 mt-6 rounded-md bg-blue font-bold text-white'
           type='submit'
