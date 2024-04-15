@@ -35,10 +35,10 @@ const Index = () => {
     }
   };
 
-  // Kullanıcı girişi yapılmışsa ve '/' yolunda olduğu zaman, '/login' sayfasına yönlendir
+  
   if (!authenticated && router.pathname === '/') {
     router.push('/login');
-    return null; // Render nothing while redirecting
+    return null; 
   }
   
   return (

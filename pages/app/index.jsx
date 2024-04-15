@@ -80,10 +80,14 @@ const Index = () => {
     textarea.current.value = '';
   };
 
+  const handleExit = () => {
+    router.push('/'); // Çıkış butonuna tıklandığında ana sayfaya yönlendir
+  };
+
   return (
     <>
       <div className='flex flex-col w-full'>
-        <div className='p-4 md:mx-6 mb-14'>
+        <div className='p-6 m-4 mb-12'>
           <ChatBody data={messages} />
         </div>
         <div className='fixed bottom-0 mt-4 w-full'>
@@ -106,6 +110,22 @@ const Index = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className='fixed top-1 right-2 m-4'>
+        <button
+          className='p-2 rounded-full bg-gray-200 hover:bg-gray-300'
+          onClick={handleExit}
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            className='h-6 w-6'
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='currentColor'
+          >
+            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+          </svg>
+        </button>
       </div>
     </>
   );

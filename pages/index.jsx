@@ -66,6 +66,25 @@ const Index = () => {
     }
   };
 
+  const deleteRoom = async (roomId) => {
+    try {
+      const res = await fetch(`${API_URL}/ws/deleteRoom/${roomId}`, {
+        method: 'DELETE',
+      });
+
+      if (res.ok) {
+        getRooms();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleLogout = () => {
+    // Redirect to the login page when logging out
+    router.push('/login');
+  };
+
   return (
     <>
       <div className='my-8 px-4 md:mx-32 w-full h-full'>
@@ -98,16 +117,40 @@ const Index = () => {
                 </div>
                 <div className=''>
                   <button
-                    className='px-4 text-white bg-blue rounded-md'
+                    className='px-4 py-2  text-white bg-blue rounded-md mr-2 '
                     onClick={() => joinRoom(room.id)}
                   >
                     join
+                  </button>
+                  
+                  
+                  <button
+                    className='px-4 py-2 my-2 text-white bg-red rounded-md mr-1'
+                    onClick={() => deleteRoom(room.id)}
+                  >
+                    delete
                   </button>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </div>
+      <div className='fixed top-1 right-2 m-4'>
+        <button
+          className='p-2 rounded-full bg-gray-200 hover:bg-gray-300'
+          onClick={handleLogout}
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            className='h-6 w-6'
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='currentColor'
+          >
+            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+          </svg>
+        </button>
       </div>
     </>
   );
