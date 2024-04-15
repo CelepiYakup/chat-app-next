@@ -45,17 +45,17 @@ const Index = () => {
     <div className='flex items-center justify-center min-w-full min-h-screen'>
       <form className='flex flex-col md:w-1/5'>
         <div className='text-3xl font-bold text-center'>
-          <span className='text-blue'>welcome!</span>
+          <span className='text-red'>Welcome to TinyChatApp</span>
         </div>
         <input
-          placeholder='email'
+          placeholder='Email'
           className='p-3 mt-8 rounded-md border-2 border-grey focus:outline-none focus:border-blue'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
           type='password'
-          placeholder='password'
+          placeholder='Password'
           className='p-3 mt-4 rounded-md border-2 border-grey focus:outline-none focus:border-blue'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -63,11 +63,11 @@ const Index = () => {
         <p className='p-1 mt-2 rounded-md bg-black font-bold text-sm text-black'>
           You don't have an account?
         </p>
-        <Link className='p-1 mt font-bold bg-black text-blue text-sm' href={'/signup'}>
+        <Link className='p-1 mt font-bold bg-black text-red text-sm' href={'/signup'}>
           Signup
         </Link>
         <button
-          className='p-3 mt-6 rounded-md bg-blue font-bold text-white'
+          className='p-3 mt-6 rounded-md bg-red font-bold text-white'
           type='submit'
           onClick={submitHandler}
         >
