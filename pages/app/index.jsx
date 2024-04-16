@@ -8,6 +8,7 @@ import { AuthContext } from '../../modules/auth_provider';
 
 const Index = () => {
   const [messages, setMessage] = useState([]);
+  const [messageText, setMessageText] = useState('');
   const textarea = useRef(null);
   const { conn } = useContext(WebsocketContext);
   const [users, setUsers] = useState([]);
@@ -70,18 +71,34 @@ const Index = () => {
   }, [textarea, messages, conn, users]);
 
   const sendMessage = () => {
-    if (!textarea.current?.value) return;
+    if (!messageText.trim()) return;
     if (conn === null) {
       router.push('/');
       return;
     }
 
-    conn.send(textarea.current.value);
-    textarea.current.value = '';
+    conn.send(messageText);
+    setMessageText('');
+  };
+
+  const handleInputChange = (e) => {
+    setMessageText(e.target.value);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+      sendMessage();
+    }
   };
 
   const handleExit = () => {
-    router.push('/'); // Çıkış butonuna tıklandığında ana sayfaya yönlendir
+    if (conn === null) {
+      router.push('/');
+      return;
+    }
+      conn.close();
+      router.push('/');
   };
 
   return (
@@ -92,17 +109,20 @@ const Index = () => {
         </div>
         <div className='fixed bottom-0 mt-4 w-full'>
           <div className='flex md:flex-row px-4 py-2 bg-grey md:mx-4 rounded-md'>
-            <div className='flex w-full mr-4 rounded-md border border-blue'>
+            <div className='flex w-full mr-4 rounded-md border border-black'>
               <textarea
                 ref={textarea}
                 placeholder='type your message here'
                 className='w-full h-10 p-2 rounded-md focus:outline-none'
                 style={{ resize: 'none' }}
+                value={messageText}
+                onChange={handleInputChange}
+                onKeyPress={handleKeyPress}
               />
             </div>
             <div className='flex items-center'>
               <button
-                className='p-2 rounded-md bg-blue text-white'
+                className='p-2 rounded-md bg-orange text-white'
                 onClick={sendMessage}
               >
                 Send
@@ -113,7 +133,7 @@ const Index = () => {
       </div>
       <div className='fixed top-1 right-2 m-4'>
         <button
-          className='p-2 rounded-full bg-gray-200 hover:bg-gray-300'
+          className='p-2 rounded-full bg-orange-200 hover:bg-gray-300'
           onClick={handleExit}
         >
           <svg

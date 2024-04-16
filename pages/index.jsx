@@ -32,6 +32,24 @@ const Index = () => {
     getRooms();
   }, []);
 
+  useEffect(() => {
+    // WebSocket bağlantısı oluştur
+    const ws = new WebSocket(`${WEBSOCKET_URL}/ws/updateRooms`);
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      // Odanın silindiğine dair bir mesaj geldiyse
+      if (data.content === 'room deleted') {
+        // Odaları yeniden getir
+        getRooms();
+      }
+    };
+
+    return () => {
+      // Component kaldırıldığında WebSocket bağlantısını kapat
+      ws.close();
+    };
+  }, []);
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
@@ -62,7 +80,6 @@ const Index = () => {
     if (ws.OPEN) {
       setConn(ws);
       router.push('/app');
-      return;
     }
   };
 
@@ -81,7 +98,7 @@ const Index = () => {
   };
 
   const handleLogout = () => {
-    // Redirect to the login page when logging out
+    // Çıkış yapılınca giriş sayfasına yönlendir
     router.push('/login');
   };
 
@@ -97,7 +114,7 @@ const Index = () => {
             onChange={(e) => setRoomName(e.target.value)}
           />
           <button
-            className='bg-blue border text-white rounded-md p-2 md:ml-4'
+            className='bg-orange border text-white rounded-md p-2 md:ml-4'
             onClick={submitHandler}
           >
             create room
@@ -109,20 +126,19 @@ const Index = () => {
             {rooms.map((room, index) => (
               <div
                 key={index}
-                className='border border-blue p-4 flex items-center rounded-md w-full'
+                className='border border-orange p-4 flex items-center rounded-md w-full'
               >
                 <div className='w-full'>
                   <div className='text-sm'>room</div>
-                  <div className='text-blue font-bold text-lg'>{room.name}</div>
+                  <div className='text-orange font-bold text-lg'>{room.name}</div>
                 </div>
                 <div className=''>
                   <button
-                    className='px-4 py-2  text-white bg-blue rounded-md mr-2 '
+                    className='px-4 py-2  text-white bg-orange rounded-md mr-2 '
                     onClick={() => joinRoom(room.id)}
                   >
                     join
                   </button>
-                  
                   
                   <button
                     className='px-4 py-2 my-2 text-white bg-red rounded-md mr-1'

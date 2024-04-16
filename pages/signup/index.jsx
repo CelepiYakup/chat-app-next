@@ -29,7 +29,7 @@ const SignUp = () => {
                 };
 
                 localStorage.setItem('user_info', JSON.stringify(user));
-                router.push('/login'); // Kayıt olduktan sonra otomatik olarak giriş sayfasına yönlendir
+                router.push('/login'); 
             }
 
         } catch (err) {
@@ -37,17 +37,16 @@ const SignUp = () => {
         }
     }
 
-    // Eğer kullanıcı zaten giriş yapmışsa ve anasayfadaysa, kayıt sayfasına yönlendir
     if (authenticated && router.pathname === '/') {
         router.push('/signup');
         return null;
     }
 
     return (
-        <div className='flex items-center justify-center min-w-full min-h-screen'>
+        <div className='flex items-center justify-center min-w-full min-h-screen bg-grey'>
             <form className='flex flex-col md:w-1/5'>
                 <div className='text-3xl font-bold text-center'>
-                    <span className='text-red'>Welcome to TinyChatApp</span>
+                    <span className='text-orange'>Welcome to TinyChatApp</span>
                 </div>
                 <input
                     placeholder='Username'
@@ -71,11 +70,11 @@ const SignUp = () => {
                 <p className='p-1 mt-2 rounded-md bg-black font-bold text-sm text-black'>
                     You have already an account??
                 </p>
-                <Link className='p-1 mt font-bold bg-black text-red text-sm' href={'/login'}>
+                <Link className='p-1 mt font-bold bg-black text-blue text-sm' href={'/login'}>
                     Login
                 </Link>
                 <button
-                    className='p-3 mt-6 rounded-md bg-red font-bold text-white'
+                    className='p-3 mt-6 rounded-md bg-orange font-bold text-white'
                     type='submit'
                     onClick={submitHandler}
                 >

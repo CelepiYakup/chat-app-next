@@ -10,9 +10,9 @@ export const AuthContext = createContext({
 });
 
 const AuthContextProvider = ({ children }) => {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(true);
   const [user, setUser] = useState({ username: '', id: '' });
-  const [loading, setLoading] = useState(true); // Add loading state
+ 
 
   const router = useRouter();
 
@@ -25,7 +25,7 @@ const AuthContextProvider = ({ children }) => {
       setAuthenticated(false);
       setUser({ username: '', id: '' });
     }
-    setLoading(false); // Set loading to false after checking authentication
+
   }, []);
 
   const handleLogin = async (data) => {
@@ -34,10 +34,10 @@ const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (!loading && !authenticated && router.pathname !== '/login') {
+    if (!authenticated && router.pathname !== '/login') {
       router.push('/login');
     }
-  }, [authenticated, router.pathname, loading]);
+  }, [authenticated, router.pathname]);
 
   return (
     <AuthContext.Provider
